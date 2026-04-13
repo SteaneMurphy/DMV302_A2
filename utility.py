@@ -66,3 +66,26 @@ def parse_transactions(rows:list[str]):
         list[list[str]]: list of transactions
     """
     return [[item.strip() for item in row] for row in rows]
+
+
+# z-score scaling
+def standardise(features: np.ndarray):
+    """
+    Standardises the feature data so each column has mean 0 and standard deviation 1.
+
+    Args:
+        features (np.ndarray): 2D array where each row is a sample and each column is a feature
+
+    Returns:
+        np.ndarray: standardised features
+    """
+    mean = np.mean(features, axis=0)
+    std = np.std(features, axis=0)
+    std = np.where(std == 0, 1, std)        # edge-case, division by 0
+
+    return (features - mean) / std
+    
+    #https://numpy.org/doc/stable/reference/generated/numpy.mean.html
+    #https://numpy.org/doc/stable/reference/generated/numpy.std.html
+    #https://numpy.org/doc/stable/reference/generated/numpy.where.html
+    #https://docs.python.org/3/library/csv.html
