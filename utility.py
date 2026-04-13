@@ -2,22 +2,17 @@ import csv
 import numpy as np
 
 
-"""
-Loads data from a CSV file into a numpy array.
+def read_csv(path:str, skip_header:bool = False):
+    """
+    Reads a CSV file and returns non-empty rows.
 
-Designed for numeric datasets where each row contains
-comma-separated float values.
+    Args:
+        path (str): filepath to CSV
+        skip_header (bool): whether to skip first row
 
-Args:
-    path (str): filepath to CSV
-    skip_header (bool): whether to skip first row
-
-Returns:
-    np.ndarray: 2D array of floats
-"""
-def load_numeric(path:str, skip_header:bool=False):                           # Q1
-    data = []
-
+    Returns:
+        list[str]: a single CSV row as a list of strings
+    """
     with open(path, 'r') as file:
         reader = csv.reader(file)
 
@@ -25,70 +20,49 @@ def load_numeric(path:str, skip_header:bool=False):                           # 
             next(reader)
 
         for row in reader:
-            if len(row) == 0:
-                continue
-            # convert each value to float and remove whitespace
-            data.append([float(x.strip()) for x in row])        
-
-    return np.array(data)
+            if row:
+                yield row
 
 
-"""
-Loads data from a CSV file into two numpy arrays.
+def parse_numeric(rows:list[str]):
+    """
+    Parses rows of purely numeric values.
 
-Designed for supervised numeric datasets where each row contains
-comma-separated feature values followed by a label.
+    Args:
+        rows: array of CSV rows
 
-Args:
-    path (str): filepath to CSV
-    skip_header (bool): whether to skip first row
+    Returns:
+        np.ndarray (float): array of floats
+    """
+    return np.array([[float(x.strip()) for x in row] for row in rows])
 
-Returns:
-    np.ndarray: feature matrix (2D float array)
-    np.ndarray: label vector (1D int array)
-"""
-def load_features_labels(path:str, skip_header:bool=False):                    # Q3
-    features, labels = [], []
 
-    with open(path, 'r') as file:
-        reader = csv.reader(file)
+def parse_features_labels(rows:list[str]):
+    """
+    Parses rows into features and labels.
 
-        if skip_header:
-            next(reader)
+    Assumes last column is an integer class label.
 
-        for row in reader:
-            if len(row) == 0:
-                continue
-            # extract all columns except last, convert to float and remove whitespace
-            features.append([float(x.strip()) for x in row[:-1]])
-            # extract last column as target label, convert to int and remove whitespace  
-            labels.append(int(row[-1].strip()))
+    Args:
+        rows: array of CSV rows
 
+    Returns:
+        np.ndarray (float): features
+        np.ndarray (int): labels 
+    """
+    features = [[float(x.strip()) for x in row[:-1]] for row in rows]
+    labels = [int(row[-1].strip()) for row in rows]
     return np.array(features), np.array(labels)
 
 
-"""
-Loads data from a CSV file and splits into a list of transactions.
+def parse_transactions(rows:list[str]):
+    """
+    Parses rows into transactions for association analysis.
 
-Args:
-    path (str): filepath to CSV
-    skip_header (bool): whether to skip first row
+    Args:
+        rows: array of CSV rows
 
-Returns:
-    list[list (str)]: inner list contains a transaction row
-"""
-def load_transactions(path:str, skip_header:bool=False):                       # Q4
-    transactions = []
-
-    with open(path, 'r') as file:
-        reader = csv.reader(file)
-
-        for row in reader:
-            if len(row) == 0:
-                continue
-
-            # add row to list, strip whitespace
-            transactions.append([item.strip() for item in row])
-
-    return transactions
-        
+    Returns:
+        list[list[str]]: list of transactions
+    """
+    return [[item.strip() for item in row] for row in rows]
