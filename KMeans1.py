@@ -5,7 +5,7 @@ KMeans clustering experiment (K=3).
 Runs clustering on standardised financial data and prints centroids.
 """
 centroids, clusters = clustering_k_means(
-    k_value=3, 
+    k_value=4, 
     max_iterations=100, 
     tolerance=0.001
 )

@@ -30,7 +30,7 @@ k_values = list(range(2, 11))
 
 for i in range(len(k_values)):
     k = k_values[i]
-    inertia = inertia_result[i]
+    inertia = inertia_result[i] / 1000
     dunn = dunn_result[i]
 
     print(f"{k:>3}  | {inertia:>10.4f}    | {dunn:>10.4f}")

@@ -1,6 +1,6 @@
 import csv
 import numpy as np
-from typing import List, Tuple
+from typing import List, Tuple, Set
 
 def read_csv(path:str, skip_header:bool = False):
     """
@@ -55,7 +55,8 @@ def parse_features_labels(rows:list[str]) -> Tuple[np.ndarray, np.ndarray]:
     return np.array(features), np.array(labels)
 
 
-def parse_transactions(rows:list[str]) -> List[List[str]]:
+
+def parse_transactions(rows:list[str]) -> List[Set[str]]:
     """
     Parses rows into transactions for association analysis.
 
@@ -63,9 +64,9 @@ def parse_transactions(rows:list[str]) -> List[List[str]]:
         rows: array of CSV rows
 
     Returns:
-        list[list[str]]: list of transactions
+        list[set[str]]: list of transactions
     """
-    return [[item.strip() for item in row] for row in rows]
+    return [{item.strip().lower() for item in row} for row in rows]
 
 
 # z-score scaling
