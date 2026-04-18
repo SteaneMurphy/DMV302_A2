@@ -40,8 +40,6 @@ def clustering_k_means(k_value:int, max_iterations:int, tolerance:float | None =
 
     return centroids, clusters
 
-#https://numpy.org/doc/stable/reference/generated/numpy.mean.html
-
 
 
 def calculate_inertia(centroids:list[np.ndarray], clusters:list[list[np.ndarray]]) -> float:   # how tight data points are in the cluster (centroid relative)
@@ -53,7 +51,7 @@ def calculate_inertia(centroids:list[np.ndarray], clusters:list[list[np.ndarray]
 
     return inertia
 
-#https://www.geeksforgeeks.org/machine-learning/elbow-method-for-optimal-value-of-k-in-kmeans/
+
 
 def calculate_dunn_index(centroids:list[np.ndarray], clusters:list[list[np.ndarray]]) -> float:
                                                                                                # how tight data points are in the cluster / how tight clusters are to one another
@@ -80,7 +78,3 @@ def calculate_dunn_index(centroids:list[np.ndarray], clusters:list[list[np.ndarr
         return 0.0
 
     return inter_min / intra_max
-
-#https://medium.com/@jeffzyme/understanding-inertia-distortion-and-silhouette-scores-and-their-differences-key-metrics-for-458fe28ce2aa
-#https://medium.com/@abhaysingh71711/k-means-clustering-a-deep-dive-into-unsupervised-learning-81213f56cfc9
-#https://mayankdw.medium.com/k-means-clustering-and-dunn-index-implementaion-from-scratch-9c66573bfe90
