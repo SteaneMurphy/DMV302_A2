@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from numpy import mean
-from utility import read_csv, parse_numeric, standardise, euclidean_distance
+from utility.util import read_csv, parse_numeric, standardise, euclidean_distance
 
 def preprocess_data(path:str):
     rows = read_csv(path, skip_header=True)                                                    # import rows from CSV

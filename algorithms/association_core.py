@@ -1,5 +1,5 @@
 import numpy as np
-from utility import read_csv, parse_transactions
+from utility.util import read_csv, parse_transactions
 
 def preprocess_data(path:str):
     rows = read_csv(path, skip_header=True)                                                    # import rows from CSV

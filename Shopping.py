@@ -1,5 +1,5 @@
 from algorithms.association_core import preprocess_data, calculate_support, calculate_confidence
-from utility import parse_sup_command, parse_con_command, display_result, header, commands
+from utility.util import parse_sup_command, parse_con_command, display_result, header, commands
 
 def main_menu():
     print(header)

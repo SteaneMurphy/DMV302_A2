@@ -76,6 +76,12 @@ def parse_transactions(rows:list[str]) -> list[set[str]]:
 #  PREPROCESSING UTILITY  #
 ###########################
 
+def calculate_mean(features: np.ndarray) -> np.ndarray:
+    return np.mean(features, axis=0)
+
+def calculate_standard_deviation(features: np.ndarray) -> np.ndarray:
+    return np.std(features, axis=0)
+
 def standardise(features: np.ndarray) -> np.ndarray:
     """
     Standardises the feature data so each column has mean 0 and standard deviation 1.
@@ -86,12 +92,12 @@ def standardise(features: np.ndarray) -> np.ndarray:
     Returns:
         np.ndarray: standardised features
     """
-    mean = np.mean(features, axis=0)                                                # calculate mean
-    std = np.std(features, axis=0)                                                  # calculate standard deviation
+    mean = calculate_mean(features)                                                 # calculate mean
+    std = calculate_standard_deviation(features)                                    # calculate standard deviation
     std = np.where(std == 0, 1, std)                                                # edge-case, division by 0
 
-    return (features - mean) / std                                                  # standardise data (z-score scaling)
-
+    features = (features - mean) / std                                              # standardise data (z-score scaling)    
+    return features, mean, std                                          
 
 ###########################
 #      MATH UTILITY       #
