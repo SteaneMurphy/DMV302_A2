@@ -1,9 +1,7 @@
 from algorithms.neural_network_core import NNClassifier
+from NN1validate import validate_model
 
-train_path = "data/at_risk_students_training.csv"
-test_path = "data/at_risk_students_test.csv"
-
-configs = [
+configs = [                                                            # set configurations of hidden layers and neurons
     (5,),
     (10,),
     (20,),
@@ -19,13 +17,12 @@ configs = [
 print("\nHidden Layers | Accuracy | Error")
 print("----------------------------------")
 
-for cfg in configs:
+for i in configs:
 
-    model = NNClassifier()
-    model.model.hidden_layer_sizes = cfg   # override architecture
+    instance = NNClassifier()                                         # create instance of model
+    instance.model.hidden_layer_sizes = i                             # override default configuration
 
-    model.train_model()
-    model.test_model()
+    instance.train_model()                                            # train model
+    accuracy, error = validate_model(instance)                        # validate model
 
-    # NOTE: your class currently prints accuracy,
-    # so we just observe output
+    print(f"{str(i):<14} | {accuracy:.4f}   | {error:.4f}")

@@ -91,6 +91,8 @@ def standardise(features: np.ndarray) -> np.ndarray:
 
     Returns:
         np.ndarray: standardised features
+        mean
+        std
     """
     mean = calculate_mean(features)                                                 # calculate mean
     std = calculate_standard_deviation(features)                                    # calculate standard deviation
@@ -208,3 +210,10 @@ def display_result(itemset_a: set[str], result: float, association_type: str = "
         left = ", ".join(sorted(itemset_a))
         right = ", ".join(sorted(itemset_b))
         print(f"\n{left} --> {right} has a {association_type} of {result:.4f} ({result * 100:.2f}%)".upper())
+
+# https://numpy.org/doc/stable/reference/generated/numpy.linalg.norm.html
+# https://numpy.org/doc/stable/reference/generated/numpy.mean.html
+# https://numpy.org/doc/stable/reference/generated/numpy.std.html
+# https://numpy.org/doc/stable/reference/generated/numpy.where.html
+# https://docs.python.org/3/library/csv.html
+# https://medium.com/analytics-vidhya/feature-scaling-for-machine-learning-normalization-vs-standardization-34daa2d4f707

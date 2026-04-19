@@ -4,7 +4,7 @@ from algorithms.kmeans_core import clustering_k_means
 KMeans clustering experiment (K=3).
 Runs clustering on standardised financial data and prints centroids.
 """
-centroids, clusters = clustering_k_means(
+centroids, clusters = clustering_k_means(                               # k-means algorithm (K=3)
     k_value=3, 
     max_iterations=100, 
     tolerance=0.001

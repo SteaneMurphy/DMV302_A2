@@ -1,12 +1,11 @@
 import random
 import numpy as np
-from numpy import mean
 from utility.util import read_csv, parse_numeric, standardise, euclidean_distance
 
 def preprocess_data(path:str):
     rows = read_csv(path, skip_header=True)                                                    # import rows from CSV
     features = parse_numeric(rows)                                                             # parse rows into numeric data format
-    features = standardise(features)                                                           # standardise the rows for clustering
+    features, mean, std = standardise(features)                                                # standardise the rows for clustering
 
     return features
 
@@ -25,7 +24,7 @@ def clustering_k_means(k_value:int, max_iterations:int, tolerance:float | None =
             closest = distances.index(min(distances))                                          # determine closest centroid to data point
             clusters[closest].append(vector)                                                   # assign data point to closest centroid
                                
-        new_centroids = [mean(cluster, axis=0) if cluster else centroids[i]                    # calculate the mean for centroids from all assigned data points
+        new_centroids = [np.mean(cluster, axis=0) if cluster else centroids[i]                 # calculate the mean for centroids from all assigned data points
             for i, cluster in enumerate(clusters)                                              # for each cluster (enumerate over clusters array)
         ]
 
@@ -78,3 +77,6 @@ def calculate_dunn_index(centroids:list[np.ndarray], clusters:list[list[np.ndarr
         return 0.0
 
     return inter_min / intra_max
+
+# https://medium.com/@abhaysingh71711/k-means-clustering-a-deep-dive-into-unsupervised-learning-81213f56cfc9
+# https://mayankdw.medium.com/k-means-clustering-and-dunn-index-implementaion-from-scratch-9c66573bfe90
